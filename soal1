@@ -1,0 +1,42 @@
+# Soal 1
+n = int(input('Masukkan jumlah kategori: '))
+
+data_aplikasi = {}
+
+for i in range(n):
+    nama_kategori = input(f'\nMasukkan nama kategori ke-{i+1}: ')
+    print(f'Masukkan 5 nama aplikasi di kategori {nama_kategori}')
+    aplikasi = []
+    for j in range(5):
+        nama_aplikasi = input(f'Nama aplikasi ke-{j+1}: ')
+        aplikasi.append(nama_aplikasi)
+    data_aplikasi[nama_kategori] = aplikasi
+
+print('\n=== Daftar Aplikasi per Kategori ===')
+for kategori, apps in data_aplikasi.items():
+    print(f'{kategori}: {apps}')
+
+daftar_aplikasi_list = [set(apps) for apps in data_aplikasi.values()]
+
+muncul_di_semua = set.intersection(*daftar_aplikasi_list)
+
+semua_aplikasi = []
+for apps in data_aplikasi.values():
+    semua_aplikasi.extend(apps)
+
+from collections import Counter
+frekuensi = Counter(semua_aplikasi)
+
+hanya_di_satu = {app for app, count in frekuensi.items() if count == 1}
+
+tepat_dB_dua = {app for app, count in frekuensi.items() if count == 2} if n > 2 else set()
+
+print('\n=== Aplikasi yang Muncul di Semua Kategori ===')
+print(muncul_di_semua if muncul_di_semua else "Tidak ada aplikasi yang muncul di semua kategori.")
+
+print('\n=== Aplikasi yang Hanya Muncul di Satu Kategori ===')
+print(hanya_di_satu if hanya_di_satu else "Tidak ada aplikasi yang unik untuk satu kategori.")
+
+if n > 2:
+    print('\n=== Aplikasi yang Muncul Tepat di Dua Kategori ===')
+    print(tepat_di_dua if tepat_di_dua else "Tidak ada aplikasi yang muncul tepat di dua kategori.")
